@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="navbar1.css">
+    <link rel="stylesheet" href="style1.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="index.html" class="logo-details">
+          <i class='glyphicon glyphicon-th-list'></i>
+          <div class="logo_name">Mode</div>
+          <i class='bx bx-menu' id="btn"></i>
+        </a>
+        <ul class="nav-list">
+          <li>
+            <a href="currencyConverter.html">
+              <i class='glyphicon glyphicon-euro'></i>
+              <span class="links_name">Convert Currency</span>
+            </a>
+             <span class="tooltip">Convert</span>
+          </li>
+          <li>
+           <a href="roundoff.html">
+             <i class='glyphicon glyphicon-repeat' ></i>
+             <span class="links_name">Round Off</span>
+           </a>
+           <span class="tooltip">User</span>
+         </li>
+         <li>
+           <a href="history.html">
+             <i class='glyphicon glyphicon-list-alt' ></i>
+             <span class="links_name">History</span>
+           </a>
+           <span class="tooltip">History</span>
+         </li>
+        </ul>
+    </div>
+
+    <div class="calc-container">
+        <div class="calc-display">
+            <div class="display-screen">
+                <div class="screen-last"></div>
+                <div class="screen-current"></div>
+            </div>
+        </div>
+        <div class="calc-buttons1">
+            <button class="number-button" onclick="calculator.appendNumber('7')">7</button>
+            <button class="number-button" onclick="calculator.appendNumber('8')">8</button>
+            <button class="number-button" onclick="calculator.appendNumber('9')">9</button>
+            <button class="operator-button" onclick="calculator.setOperation('+')">+</button>
+            <button id="delete-button" onclick="calculator.delete()">DEL</button>
+            <button class="number-button" onclick="calculator.appendNumber('4')">4</button>
+            <button class="number-button" onclick="calculator.appendNumber('5')">5</button>
+            <button class="number-button" onclick="calculator.appendNumber('6')">6</button>
+            <button class="operator-button" onclick="calculator.setOperation('-')">-</button>
+            <button id="clear-button" onclick="calculator.clear()">AC</button>
+            <button class="number-button" onclick="calculator.appendNumber('1')">1</button>
+            <button class="number-button" onclick="calculator.appendNumber('2')">2</button>
+            <button class="number-button" onclick="calculator.appendNumber('3')">3</button>
+            <button class="operator-button" onclick="calculator.setOperation('*')">x</button>
+            <button class="operator-button" onclick="calculator.setOperation('/')">/</button>
+        </div>
+        <div class="calc-buttons2">
+            <button class="number-button" style="grid-column: span 2; grid-row: span 2;" onclick="calculator.appendNumber('0')">0</button>
+            <button class="number-button" style="grid-row: span 2;" onclick="calculator.appendDecimal('.')">.</button>
+            <button class="operator-button" onclick="calculator.setOperation('÷')">÷</button>
+            <button class="operator-button" onclick="calculator.setOperation('%')">%</button>
+            <button class="answer-button" onclick="calculator.useLastAnswer()">ANS</button>
+            <button class="operate-button" onclick="calculator.calculate()">=</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-md-offset-6">
+            <div class="calc-history">
+                <h2>Calculator History</h2>
+                <table class="table" id="history-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Expression</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-list">
+                        <!-- You can dynamically populate this table using JavaScript -->
+                    </tbody>
+                    <button class="operate-button" id="reset-history-button" onclick="calculator.resetHistory()">Reset History</button>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script1.js"></script>
+    <script>
+        class Calculator {
+            constructor() {
+                this.expression = '';
+                this.lastAnswer = '';
+                this.history = [];
+            }
+
+            appendNumber(number) {
+                this.expression += number;
+                this.updateDisplay();
+            }
+
+            appendDecimal(decimal) {
+                if (!this.expression.includes(decimal)) {
+                    this.expression += decimal;
+                    this.updateDisplay();
+                }
+            }
+
+            setOperation(operator) {
+                if (this.expression !== '') {
+                    if (operator === '&divide;') {
+                        this.expression += ' ÷ ';
+                    } else {
+                        this.expression += ` ${operator} `;
+                    }
+                    this.updateDisplay();
+                }
+            }
+
+            clear() {
+                this.expression = '';
+                this.updateDisplay();
+            }
+
+            delete() {
+                this.expression = this.expression.slice(0, -1);
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                const displayCurrent = document.querySelector('.screen-current');
+                displayCurrent.textContent = this.expression;
+            }
+
+            calculate() {
+                try {
+                    // Replace ÷ with /
+                    const evalExpression = this.expression.replace(/÷/g, '/');
+                    const result = eval(evalExpression);
+                    this.saveToHistory(this.expression, result);
+                    this.lastAnswer = result;
+                    this.expression = result.toString();
+                    this.updateDisplay();
+                } catch (error) {
+                    this.expression = 'Error';
+                    this.updateDisplay();
+                }
+            }
+
+            useLastAnswer() {
+                if (this.lastAnswer !== '') {
+                    this.expression += this.lastAnswer;
+                    this.updateDisplay();
+                }
+            }
+
+            saveToHistory(expression, result) {
+                this.history.push({ expression, result });
+                this.updateHistoryTable();
+            }
+
+            updateHistoryTable() {
+                const historyList = document.getElementById('history-list');
+                historyList.innerHTML = '';
+
+                this.history.forEach((entry, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${index + 1}</td><td>${entry.expression}</td><td>${entry.result}</td>`;
+                    historyList.appendChild(row);
+                });
+            }
+
+            resetHistory() {
+                this.history = [];
+                this.updateHistoryTable();
+            }
+        }
+
+        const calculator = new Calculator();
+    </script>
+</body>
+
+</html>

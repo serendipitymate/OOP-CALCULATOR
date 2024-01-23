@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Round-off Calculator</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+	</script>
+	<script src= "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+	</script>
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href= "https://fonts.googleapis.com/css2?family=Amiri&family=Lobster&family=Pacifico&display=swap"
+		rel="stylesheet">
+        
+	<!-- linking style.css file-->
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="navbar1.css">
+</head>
+
+<body>
+	<div class="sidebar">
+        <a href="index.html" class="logo-details">
+          <i class='glyphicon glyphicon-th-list'></i>
+          <div class="logo_name">Mode</div>
+          <i class='bx bx-menu' id="btn"></i>
+        </a>
+        <ul class="nav-list">
+          <li>
+            <a href="currencyConverter.html">
+              <i class='glyphicon glyphicon-euro'></i>
+              <span class="links_name">Convert Currency</span>
+            </a>
+             <span class="tooltip">Convert</span>
+          </li>
+          <li>
+           <a href="roundoff.html">
+             <i class='glyphicon glyphicon-repeat' ></i>
+             <span class="links_name">Round Off</span>
+           </a>
+           <span class="tooltip">User</span>
+         </li>
+         <li>
+           <a href="history.html">
+             <i class='glyphicon glyphicon-list-alt' ></i>
+             <span class="links_name">History</span>
+           </a>
+           <span class="tooltip">History</span>
+         </li>
+        </ul>
+      </div>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Round-off Calculator</h2>
+    
+    <label for="number">Enter a number:</label>
+    <input type="number" id="number" placeholder="Enter a number" />
+
+    <button onclick="roundToNearestTenth()">Round to Nearest Tenth</button>
+    <button onclick="roundToNearestHundred()">Round to Nearest Hundred</button>
+    <button onclick="roundToNearestThousand()">Round to Nearest Thousand</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function roundToNearestTenth() {
+      const number = parseFloat(document.getElementById('number').value);
+      const roundedNumber = Math.round(number / 10) * 10;
+
+      document.getElementById('result').innerHTML = `Rounded-off number to nearest ten: ${roundedNumber.toFixed(2)}`;
+    }
+
+    function roundToNearestHundred() {
+      const number = parseFloat(document.getElementById('number').value);
+      const roundedNumber = Math.round(number / 100) * 100;
+
+      document.getElementById('result').innerHTML = `Rounded-off number to nearest hundred: ${roundedNumber.toFixed(2)}`;
+    }
+
+    function roundToNearestThousand() {
+      const number = parseFloat(document.getElementById('number').value);
+      const roundedNumber = Math.round(number / 1000) * 1000;
+
+      document.getElementById('result').innerHTML = `Rounded-off number to nearest thousand: ${roundedNumber.toFixed(2)}`;
+    }
+
+    function roundOff(decimalPlaces) {
+      const number = parseFloat(document.getElementById('number').value);
+      const roundedNumber = number.toFixed(decimalPlaces);
+
+      document.getElementById('result').innerHTML = `Rounded-off number: ${roundedNumber}`;
+    }
+  </script>
+</body>
+</html>

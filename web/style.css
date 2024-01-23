@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 23, 2024, 11:33:04 PM
+    Author     : Munajjah
+*/
+
+body {
+	background-color: aliceblue;
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+.heading {
+	font-family: 'Segoe UI', cursive;
+	margin: 35px auto 20px;
+}
+
+hr {
+	border-top: 2px solid black;
+	width: 40%;
+	margin-bottom: 55px;
+}
+
+.main {
+	width: 35vw;
+	margin: auto;
+	padding: 30px;
+	border-radius: 5px;
+	background-color: rgb(153, 131, 78);
+	color: white;
+}
+
+label {
+	font-size: 20px;
+}
+
+.btn {
+	width: 170px;
+}
+
+#finalAmount {
+	font-family: 'Lobster', cursive;
+	display: none;
+	margin: 50px auto;
+}
+
+#finalAmount h2 {
+	font-size: 50px;
+}
+
+.finalValue {
+	font-family: 'Amiri', serif;
+}
+
+@media (max-width: 768px) {
+	hr {
+		width: 60%;
+	}
+
+	.main {
+		width: 100%;
+	}
+}
+
+@media (max-width: 400px) {
+	.heading {
+		font-size: 60px;
+	}
+
+	hr {
+		width: 75%;
+	}
+
+	#finalAmount h2,
+	.finalValue {
+		font-size: 40px;
+	}
+}
+
+

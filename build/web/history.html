@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Currency Conversion history</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+	</script>
+	<script src= "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+	</script>
+
+	<link href="https://fonts.gstatic.com">
+	<link href= "https://fonts.googleapis.com/css2?family=Amiri&family=Lobster&family=Pacifico&display=swap"
+		rel="stylesheet">
+        
+	<!-- linking style.css file-->
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="navbar1.css">
+</head>
+
+<body>
+	<div class="sidebar">
+        <a href="index.html" class="logo-details">
+          <i class='glyphicon glyphicon-th-list'></i>
+          <div class="logo_name">Mode</div>
+          <i class='bx bx-menu' id="btn"></i>
+        </a>
+        <ul class="nav-list">
+          <li>
+            <a href="currencyConverter.html">
+              <i class='glyphicon glyphicon-euro'></i>
+              <span class="links_name">Convert Currency</span>
+            </a>
+             <span class="tooltip">Convert</span>
+          </li>
+          <li>
+           <a href="roundoff.html">
+             <i class='glyphicon glyphicon-repeat' ></i>
+             <span class="links_name">Round Off</span>
+           </a>
+           <span class="tooltip">User</span>
+         </li>
+         <li>
+           <a href="reset.html">
+             <i class='glyphicon glyphicon-trash' ></i>
+             <span class="links_name">Reset All</span>
+           </a>
+           <span class="tooltip">Reset </span>
+         </li>
+        </ul>
+      </div>
+
+    <div class="container">
+        <h1 class="text-center mt-4">Conversion History</h1>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>From Currency</th>
+                    <th>To Currency</th>
+                    <th>Amount</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- Conversion history will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <!-- Clear History Button -->
+        <button class="btn btn-danger mt-2" onclick="clearHistory()">Clear History</button>
+    </div>
+
+    <!-- Bootstrap JavaScript and dependencies (jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to fetch and display history -->
+    <script src="script.js"></script>
+
+    <script>
+        // Function to show currency converter history
+        function showCurrencyConverterHistory() {
+            console.log("Show Currency Converter History");
+        }
+
+        // Function to show calculator history
+        function showCalculatorHistory() {
+            console.log("Show Calculator History");
+        }
+
+        // Function to clear history
+        function clearHistory() {
+            // Clear local storage
+            localStorage.removeItem("conversionHistory");
+
+            // Reload the page or update the history display as needed
+            fetchAndDisplayHistory();
+        }
+
+        // Function to fetch and display conversion history
+        function fetchAndDisplayHistory() {
+            // Fetch conversion history from local storage
+            let conversionHistory = JSON.parse(localStorage.getItem("conversionHistory")) || [];
+
+            // Get the table body element
+            let historyTableBody = document.getElementById("historyTableBody");
+
+            // Clear existing rows
+            historyTableBody.innerHTML = "";
+
+            // Loop through the conversion history and add rows to the table
+            conversionHistory.forEach(function (conversion, index) {
+                let row = historyTableBody.insertRow();
+
+                // Add cells to the row
+                let numberCell = row.insertCell(0);
+                let fromCurrencyCell = row.insertCell(1);
+                let toCurrencyCell = row.insertCell(2);
+                let amountCell = row.insertCell(3);
+                let resultCell = row.insertCell(4);
+
+                // Populate cells with conversion data
+                numberCell.textContent = index + 1;
+                fromCurrencyCell.textContent = conversion.from;
+                toCurrencyCell.textContent = conversion.to;
+                amountCell.textContent = conversion.amount;
+                resultCell.textContent = conversion.convertedAmount;
+            });
+        }
+
+        // Call the fetchAndDisplayHistory function to load history when the page is loaded
+        fetchAndDisplayHistory();
+    </script>
+</body>
+
+</html>
